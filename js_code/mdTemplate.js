@@ -4,7 +4,7 @@ function generateMD(data) {
 
         ${data.description}
 
-        ${data.licenseBadge}
+        ${data.license}
 
     ## Contents
 
@@ -39,8 +39,11 @@ function generateMD(data) {
     ## Test Instructions
     ${data.test}
 
+    ## Questions?
+    For any questions or comments, please head over to my GitHub: ${data.gitHub}
+    or email me at ${data.email}
 
-
-    `
-
+    `;
 }
+
+module.exports = generateMD;

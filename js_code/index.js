@@ -8,37 +8,54 @@ inquirer
         {
             type: 'input',
             message: 'What is the title of your project?',
-            name: 'Title',
+            name: 'title',
         },
         {
             type: 'input',
             message: 'Write a project description',
-            name: 'Description',
+            name: 'description',
+        },
+        {
+            type: 'list',
+            message: 'What licensing does is this under?',
+            choices: ['GNU AGPLv3','GNU GPLv3','GNU LGPLv3','Mozilla','MIT','Apache','Boost',],
+            name: 'license',
         },
         {
             type: 'input',
             message: 'What are the installation instructions?',
-            name: 'Installation Instructions',
+            name: 'installation',
         },
         {
             type: 'input',
             message: 'What is the usage information?',
-            name: 'Usage Information',
+            name: 'usage',
         },
         {
             type: 'input',
             message: 'What are the contribution guidelines?',
-            name: 'Contribution Guidelines',
+            name: 'contribution',
         },
         {
             type: 'input',
             message: 'What are the test instructions?',
-            name: 'Test Instructions',
+            name: 'test',
+        },
+        {
+            type: 'input',
+            message: 'What is your GitHub username?',
+            name: 'gitHub',
+        },
+        {
+            type: 'input',
+            message: 'What is your email address?',
+            name: 'email',
         },
     ])
     .then((data) => {
+        // create file name from the title of the project
         const filename = `${data.Title.toLowerCase().split(' ').join(' ')}.md`;
-
+        // generate the file
         fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
         err ? console.log(err) : console.log('Success! The readme has been generated!')
         );
