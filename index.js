@@ -10,10 +10,15 @@ const writeFileAsync = util.promisify(fs.writeFile);
 // Questions to ask for input
 function promptUser(){
     return inquirer.prompt([
-        {
+      {
             type: 'input',
             message: 'What is the title of your project?',
             name: 'title',
+        },
+        {
+          type: 'input',
+          message: 'What is the user story?',
+          name: 'user-story',
         },
         {
             type: 'input',
@@ -23,7 +28,7 @@ function promptUser(){
         {
             type: 'list',
             message: 'What licensing does is this under?',
-            choices: ['GNU AGPLv3','GNU GPLv3','GNU LGPLv3','Mozilla','MIT','Apache','Boost',],
+            choices: ['GNU AGPLv3','GNU GPLv3','GNU LGPLv3','Mozilla','MIT','Apache','Boost','Unlicensed'],
             name: 'license',
         },
         {
@@ -38,18 +43,18 @@ function promptUser(){
         },
         {
             type: 'input',
-            message: 'What are the contribution guidelines?',
+            message: 'Who contributed to this project?',
             name: 'contribution',
         },
         {
-            type: 'input',
-            message: 'What are the test instructions?',
-            name: 'test',
+            type: 'checkbox',
+            message: 'What applications did you use?',
+            name: 'application',
         },
         {
             type: 'input',
             message: 'What is your GitHub username?',
-            name: 'gitHub',
+            name: 'username',
         },
         {
             type: 'input',
