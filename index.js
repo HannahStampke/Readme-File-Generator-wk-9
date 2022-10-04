@@ -8,7 +8,7 @@ const mdTemplate = require('./js_code/mdTemplate');
 const writeFileAsync = util.promisify(fs.writeFile);
 
 // Questions to ask for input
-function promptUser(){
+const promptUser = () => {
     return inquirer.prompt([
       {
             type: 'input',
@@ -18,7 +18,7 @@ function promptUser(){
         {
           type: 'input',
           message: 'What is the user story?',
-          name: 'user-story',
+          name: 'userstory',
         },
         {
             type: 'input',
@@ -49,6 +49,7 @@ function promptUser(){
         {
             type: 'checkbox',
             message: 'What applications did you use?',
+            choices: ['HTML', 'CSS', 'Bootstrap', 'Javascript', 'MySQL', 'MongoDB', 'Mongoose', 'React', 'JWT', 'GraphQL', 'Node.JS', 'Express.js', 'Styled Components'],
             name: 'application',
         },
         {
@@ -84,43 +85,59 @@ function licenseTag(value) {
 };
 
 // function to initialize program and create README file
-async function init() {
-  try {
-    const answers = await promptUser();
-    answers.licenseTag = licenseTag(answers.licenseTag);
-    let readMeData = generateMD(answers);
-    await writeFileAsync(`${promptUser.title.toLowerCase().split(' ').join(' ')}.md`);
-  } catch (err) {
-    throw err;
-    };
-};
+const generateReadMe = ({ username, email, userstory, installation, usage, title, description, license, contributing, application }) =>
+    `
+# ${title}
+![Github](https://img.shields.io/badge/license-${license}-yellow.svg)
 
-    // async function init() {
-    //     try {
-    //       const answers = await promptUser();
-    //       answers.license = licenseTag(answers.licenses);
-    //       let readMeData = generateMD(answers);
-    //       await writeFileAsync(`${data.Title.toLowerCase().split(' ').join(' ')}.md`);
-    //       console.log('Success! The readme has been generated!');
-    //     } catch (err) {
-    //       throw err;
-    //     }
-    //   }
-      
-      // function call to run function
+## User Story
+${userstory}
+
+## Description
+    
+ ${description}
+    
+# Table of Contents
+    
+-[Installation](#installation)
+    
+-[Usage](#usage)
+    
+-[License](#license)
+    
+-[Contributing](#contributing)
+    
+-[Test](#test)
+    
+-[Questions](#questions) 
+
+# Installation
+To install the repository, please use the following command:
+ ${installation} 
+    
+# Usage
+${usage} 
+    
+# License
+This repository is licensed under ${license}
+
+# Contributing
+${contributing}
+    
+# Application
+Applications used in making this:
+${application}
+    
+# Questions 
+  For any questions and comments please email me at: ${email}.
+  To view my other projects visit: ${username} on Github `;
+
+const init = () => {
+    promptUser()
+
+    .then((answers) => fs.writeFileSync('ExampleREADME.md', generateReadMe(answers)))
+        .then(() => console.log('Transfered to ExampleREADME.md'))
+        .catch((err) => console.error(err));
+}
+
 init();
-    
-
-    // .then((data) => {
-    //     // create file name from the title of the project
-    //     const filename = `${data.Title.toLowerCase().split(' ').join(' ')}.md`;
-    //     // generate the file
-    //     const answers = await inquirer.prompt(questions);
-    //     answers.licenseBadge = licenseTag(answers.license);
-    //     let readMeData = generateMD(answers);
-    //     await writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
-    //         err ? console.log(err) : console.log('Success! The readme has been generated!'));
-    // });
-
-
-    
